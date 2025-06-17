@@ -1,0 +1,190 @@
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+require('dotenv').config();
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:5500/portfolio', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+// Import models (you'll need to create separate model files or copy from main app)
+const ProjectSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  technologies: [String],
+  image: String,
+  projectUrl: String,
+  githubUrl: String,
+  featured: { type: Boolean, default: false },
+  order: { type: Number, default: 0 },
+  createdAt: { type: Date, default: Date.now }
+});
+
+const EducationSchema = new mongoose.Schema({
+  institution: { type: String, required: true },
+  degree: { type: String, required: true },
+  field: String,
+  startYear: Number,
+  endYear: Number,
+  grade: String,
+  description: String,
+  order: { type: Number, default: 0 }
+});
+
+const SkillSchema = new mongoose.Schema({
+  category: { type: String, required: true },
+  skills: [String],
+  order: { type: Number, default: 0 }
+});
+
+const AdminSchema = new mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: { type: String, default: 'admin' }
+});
+
+const Project = mongoose.model('Project', ProjectSchema);
+const Education = mongoose.model('Education', EducationSchema);
+const Skill = mongoose.model('Skill', SkillSchema);
+const Admin = mongoose.model('Admin', AdminSchema);
+
+async function seedDatabase() {
+  try {
+    console.log('🌱 Starting database seeding...');
+
+    // Clear existing data
+    await Project.deleteMany({});
+    await Education.deleteMany({});
+    await Skill.deleteMany({});
+    await Admin.deleteMany({});
+
+    console.log('🗑️ Cleared existing data');
+
+    // Seed Projects
+    const projects = [
+      {
+        title: "B2C Salad Bowl Subscription Service",
+        description: "Built using Salesforce, HTML/CSS. Developed a subscription platform for customers to order salad bowls with recurring delivery options.",
+        technologies: ["Salesforce", "HTML", "CSS", "Apex"],
+        image: "/uploads/salad-project.jpg",
+        projectUrl: "https://mindful-raccoon-fm1g0a-dev-ed.trailblaze.my.site.com/s/",
+        featured: true,
+        order: 1
+      },
+      {
+        title: "Soil Monitoring System",
+        description: "Created using ESP8266 and Python. Designed a soil monitoring system to track soil moisture and temperature for agricultural purposes.",
+        technologies: ["ESP8266", "Python", "IoT", "Sensors"],
+        featured: true,
+        order: 2
+      },
+      {
+        title: "Portfolio Website",
+        description: "Built with HTML, CSS, Node.js and hosted using modern deployment practices. Showcases skills and projects as a full-stack developer.",
+        technologies: ["HTML", "CSS", "JavaScript", "Node.js", "Express", "MongoDB"],
+        githubUrl: "https://github.com/kasturib1002/portfolio",
+        featured: true,
+        order: 3
+      }
+    ];
+
+    await Project.insertMany(projects);
+    console.log('✅ Projects seeded');
+
+    // Seed Education
+    const education = [
+      {
+        institution: "Shri Ramdeobaba College of Engineering and Management (RCOEM), Nagpur",
+        degree: "Bachelor of Engineering (B.E.)",
+        field: "Electronics",
+        startYear: 2020,
+        endYear: 2024,
+        grade: "8.32 CGPA",
+        description: "Minor in Information Technology",
+        order: 1
+      },
+      {
+        institution: "Tip Top Convent, Nagpur",
+        degree: "Higher Secondary (12th Grade)",
+        endYear: 2020,
+        grade: "81.85%",
+        order: 2
+      },
+      {
+        institution: "Somalwar High School, Ramdaspeth, Nagpur",
+        degree: "Secondary School (10th Grade)",
+        endYear: 2018,
+        grade: "95.2%",
+        order: 3
+      }
+    ];
+
+    await Education.insertMany(education);
+    console.log('✅ Education seeded');
+
+    // Seed Skills
+    const skills = [
+      {
+        category: "Frontend Development",
+        skills: ["HTML5", "CSS3", "JavaScript", "Bootstrap", "Responsive Design"],
+        order: 1
+      },
+      {
+        category: "Backend Development",
+        skills: ["Python", "Node.js", "Express.js", "REST APIs", "Server Administration"],
+        order: 2
+      },
+      {
+        category: "Database",
+        skills: ["MongoDB", "MySQL", "Database Design"],
+        order: 3
+      },
+      {
+        category: "Cloud & Platforms",
+        skills: ["Salesforce", "Heroku", "GitHub Pages", "Railway"],
+        order: 4
+      },
+      {
+        category: "Other Technologies",
+        skills: ["Git & GitHub", "ESP8266", "IoT Development", "Problem Solving"],
+        order: 5
+      }
+    ];
+
+    await Skill.insertMany(skills);
+    console.log('✅ Skills seeded');
+
+    // Create Admin User
+    const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD || 'admin123', 10);
+    const admin = new Admin({
+      username: process.env.ADMIN_USERNAME || 'admin',
+      email: process.env.ADMIN_EMAIL || 'kasturibelan10@gmail.com',
+      password: hashedPassword,
+      role: 'admin'
+    });
+
+    await admin.save();
+    console.log('✅ Admin user created');
+
+    console.log('🎉 Database seeding completed successfully!');
+    console.log('\n📋 Summary:');
+    console.log(`   - ${projects.length} projects added`);
+    console.log(`   - ${education.length} education records added`);
+    console.log(`   - ${skills.length} skill categories added`);
+    console.log('   - 1 admin user created');
+    console.log(`\n🔐 Admin Login Credentials:`);
+    console.log(`   Username: ${process.env.ADMIN_USERNAME || 'admin'}`);
+    console.log(`   Password: ${process.env.ADMIN_PASSWORD || 'admin123'}`);
+    console.log(`   Email: ${process.env.ADMIN_EMAIL || 'kasturibelan10@gmail.com'}`);
+
+  } catch (error) {
+    console.error('❌ Error seeding database:', error);
+  } finally {
+    mongoose.connection.close();
+  }
+}
+
+// Run the seeding
+seedDatabase();
