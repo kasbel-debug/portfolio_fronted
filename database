@@ -50,7 +50,7 @@ const Education = mongoose.model('Education', EducationSchema);
 const Skill = mongoose.model('Skill', SkillSchema);
 const Admin = mongoose.model('Admin', AdminSchema);
 
-async function () {
+async function seedDatabase() {
   try {
     console.log('🌱 Starting database seeding...');
 
