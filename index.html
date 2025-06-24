@@ -525,7 +525,8 @@
 
   <script>
     // API Configuration
-    const API_BASE = 'https://kasturis-portfolio.onrender.com/api';
+    //const API_BASE = 'https://kasturis-portfolio.onrender.com/api';
+    const API_BASE = 'http://localhost:5000/api';
 
     // Track page views
     function trackPageView(page) {
@@ -597,67 +598,57 @@
     });
 
     // Load education from API
-    async function loadEducation() {
+   async function loadEducation() {
+      const container = document.getElementById('education-content');
+      
       try {
         const response = await fetch(`${API_BASE}/education`);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const education = await response.json();
-
-        const container = document.getElementById('education-content');
         container.innerHTML = '';
 
-        if (education.length === 0) {
-          // Fallback to static content
+        if (education && education.length > 0) {
+          education.forEach(edu => {
+            const eduCard = document.createElement('div');
+            eduCard.className = 'project-card';
+
+            eduCard.innerHTML = `
+              <h4>${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</h4>
+              <p><strong>${edu.institution}</strong></p>
+              <p>
+                ${edu.startYear && edu.endYear ? `${edu.startYear} - ${edu.endYear}` :
+                edu.endYear ? `Year of Passing: ${edu.endYear}` : ''}
+                ${edu.grade ? ` | Grade: <strong>${edu.grade}</strong>` : ''}
+              </p>
+              ${edu.description ? `<p>${edu.description}</p>` : ''}
+            `;
+
+            container.appendChild(eduCard);
+          });
+        } else {
+          // Show message if no data found
           container.innerHTML = `
-            <div class="project-card">
-              <h4>Bachelor of Engineering (B.E.) in Electronics</h4>
-              <p><strong>Shri Ramdeobaba College of Engineering and Management (RCOEM), Nagpur</strong></p>
-              <p>Year of Passing: <strong>2024</strong> | Grade: <strong>8.32 CGPA</strong></p>
-              <p>Minor: <strong>Information Technology</strong></p>
-            </div>
-            <div class="project-card">
-              <h4>Higher Secondary (12th Grade)</h4>
-              <p><strong>Tip Top Convent, Nagpur</strong></p>
-              <p>Year of Passing: <strong>2020</strong> | Percentage: <strong>81.85%</strong></p>
-            </div>
-            <div class="project-card">
-              <h4>Secondary School (10th Grade)</h4>
-              <p><strong>Somalwar High School, Ramdaspeth, Nagpur</strong></p>
-              <p>Year of Passing: <strong>2018</strong> | Percentage: <strong>95.2%</strong></p>
+            <div class="error-message">
+              <i class="fas fa-info-circle"></i> No education data found in the database.
             </div>
           `;
-          return;
         }
-
-        education.forEach(edu => {
-          const eduCard = document.createElement('div');
-          eduCard.className = 'project-card';
-
-          eduCard.innerHTML = `
-            <h4>${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</h4>
-            <p><strong>${edu.institution}</strong></p>
-            <p>
-              ${edu.startYear && edu.endYear ? `${edu.startYear} - ${edu.endYear}` :
-              edu.endYear ? `Year of Passing: ${edu.endYear}` : ''}
-              ${edu.grade ? ` | Grade: <strong>${edu.grade}</strong>` : ''}
-            </p>
-            ${edu.description ? `<p>${edu.description}</p>` : ''}
-          `;
-
-          container.appendChild(eduCard);
-        });
       } catch (error) {
         console.error('Error loading education:', error);
-        // Fallback to static content on error
-        document.getElementById('education-content').innerHTML = `
-          <div class="project-card">
-            <h4>Bachelor of Engineering (B.E.) in Electronics</h4>
-            <p><strong>Shri Ramdeobaba College of Engineering and Management (RCOEM), Nagpur</strong></p>
-            <p>Year of Passing: <strong>2024</strong> | Grade: <strong>8.32 CGPA</strong></p>
-            <p>Minor: <strong>Information Technology</strong></p>
+        container.innerHTML = `
+          <div class="error-message">
+            <i class="fas fa-exclamation-triangle"></i> 
+            Failed to load education data. Please check if the API server is running.
+            <br><small>Error: ${error.message}</small>
           </div>
         `;
       }
     }
+
 
     // Load skills from API
     async function loadSkills() {
