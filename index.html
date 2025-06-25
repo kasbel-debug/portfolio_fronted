@@ -8,7 +8,296 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
     crossorigin="anonymous">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-  <style>
+   <style>
+
+            body {
+                background-image: 
+                  linear-gradient(rgba(2, 50, 70, 0.7), rgba(2, 50, 70, 0.7)),
+                  url("https://vdigtech.com/wp-content/uploads/2024/03/Design.png"),
+                  url("https://vdigtech.com/wp-content/uploads/2024/03/Design.png");
+                background-position: left top, right top;
+                background-repeat: no-repeat, no-repeat;
+                background-position: left top, right center;
+                background-repeat: no-repeat, no-repeat;
+                background-position: left bottom, right top;
+                background-repeat: no-repeat, no-repeat;
+                /* 3D parallax effect */
+                perspective: 1000px;
+                /* Animate background position for a subtle 3D movement */
+                animation: bgParallax 10s infinite alternate linear;
+                background-attachment: fixed;
+                background-size: 350px;
+              background-position: left-top;
+              background-repeat: no-repeat;
+            }
+          
+        
+        .card-content {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+            backdrop-filter: blur(5px);
+            border-radius: 0.5rem;
+            margin: 1rem;
+        }
+        
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #023246;
+      color: #287094;
+      font-family: 'Poppins', sans-serif;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Animated Background */
+    .animated-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, #023246 0%, #1a4f6b 50%, #287094 100%);
+    }
+
+    .floating-shapes {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(40, 112, 148, 0.3));
+      animation: float 20s infinite linear;
+    }
+
+    .shape:nth-child(1) {
+      width: 80px;
+      height: 80px;
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+      animation-duration: 25s;
+    }
+
+    .shape:nth-child(2) {
+      width: 60px;
+      height: 60px;
+      top: 60%;
+      left: 80%;
+      animation-delay: 5s;
+      animation-duration: 20s;
+    }
+
+    .shape:nth-child(3) {
+      width: 100px;
+      height: 100px;
+      top: 80%;
+      left: 20%;
+      animation-delay: 10s;
+      animation-duration: 30s;
+    }
+
+    .shape:nth-child(4) {
+      width: 40px;
+      height: 40px;
+      top: 40%;
+      left: 60%;
+      animation-delay: 15s;
+      animation-duration: 18s;
+    }
+
+    .shape:nth-child(5) {
+      width: 120px;
+      height: 120px;
+      top: 10%;
+      left: 70%;
+      animation-delay: 8s;
+      animation-duration: 35s;
+    }
+
+    .shape:nth-child(6) {
+      width: 70px;
+      height: 70px;
+      top: 70%;
+      left: 50%;
+      animation-delay: 12s;
+      animation-duration: 22s;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.7;
+      }
+      50% {
+        transform: translateY(-100px) rotate(180deg);
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(0px) rotate(360deg);
+        opacity: 0.7;
+      }
+    }
+
+    /* Flowing Lines Animation */
+    .flowing-lines {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .line {
+      position: absolute;
+      width: 2px;
+      height: 200px;
+      background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.4), transparent);
+      animation: flow 15s infinite linear;
+    }
+
+    .line:nth-child(1) {
+      left: 15%;
+      animation-delay: 0s;
+      animation-duration: 20s;
+    }
+
+    .line:nth-child(2) {
+      left: 35%;
+      animation-delay: 5s;
+      animation-duration: 18s;
+    }
+
+    .line:nth-child(3) {
+      left: 55%;
+      animation-delay: 10s;
+      animation-duration: 22s;
+    }
+
+    .line:nth-child(4) {
+      left: 75%;
+      animation-delay: 3s;
+      animation-duration: 25s;
+    }
+
+    .line:nth-child(5) {
+      left: 85%;
+      animation-delay: 8s;
+      animation-duration: 19s;
+    }
+
+    @keyframes flow {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Card styling with glassmorphism effect */
+    .hero-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .hero-card:hover::before {
+      left: 100%;
+    }
+
+    .hero-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .hero-card .card-img-top {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin: 20px auto;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .hero-card:hover .card-img-top {
+      transform: scale(1.05);
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .hero-card .card-body {
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .hero-card .card-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+
+    .hero-card .card-text {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .hero-card .btn-primary {
+      background: linear-gradient(45deg, #287094, #3a8fb7);
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(40, 112, 148, 0.4);
+    }
+
+    .hero-card .btn-primary:hover {
+      background: linear-gradient(45deg, #3a8fb7, #287094);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(40, 112, 148, 0.6);
+    }
+  
     * {
       margin: 0;
       padding: 0;
@@ -102,9 +391,11 @@
       width: 150px;
       border-radius: 10px;
     }
+    
+    
 
     .tagline {
-      text-align: center;
+     text-align: center;
     }
     .card{
       text-align: center;;
@@ -117,9 +408,10 @@
       background-color: #F6F6F6;
       border-radius: 10px;
     }
-
+    
     #home {
       display: flex;
+      font-size: 1.5rem;
     }
 
     h2,
@@ -152,7 +444,52 @@
     .card {
       text-align: center;
     }
-
+        .experience-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .company {
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+        .role {
+            color: #3498db;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        .duration {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        .skills-list {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .skills-list li {
+            margin-bottom: 5px;
+        }
+         .experience-item {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        .experience-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .current-badge {
+            background: #27ae60;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
     .project-card {
       background: white;
       border-radius: 10px;
@@ -319,6 +656,9 @@
     background-color: #0e3b6b;
 }
 
+
+
+
 /* Hide the br tags */
 .skills-list br {
     display: none;
@@ -330,11 +670,12 @@
 
   <header>
     <nav>
-      <div class="left">KASTURI'S PORTFOLIO</div>
+      <div class="left" style="font-family: 'Playfair Display', serif; font-size: 2rem; letter-spacing: 2px; color: #fff;">KASTURI'S <span style="color:#3a8fb7;">PORTFOLIO</span></div>
+      <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700&display=swap" rel="stylesheet">
       <div class="right">
         <ul>
           <li><a href="#" class="tablink active" onclick="openTab('home', this)">Home</a></li>
-          <li><a href="#" class="tablink" onclick="openTab('about', this)">About</a></li>
+          <li><a href="#" class="tablink" onclick="openTab('Experience', this)">Experience</a></li>
           <li><a href="#" class="tablink" onclick="openTab('education', this)">Education</a></li>
           <li><a href="#" class="tablink" onclick="openTab('skills', this)">Skills</a></li>
           <li><a href="#" class="tablink" onclick="openTab('projects', this)">Projects</a></li>
@@ -359,10 +700,10 @@
     <section id="home" class="tabcontent firstSection">
       <div>
                 <p class="tagline">
-          "I am a motivated and curious software developer with a growing passion for Software Development. With
+            <b>"I am a motivated and curious software developer with a growing passion for Software Development. With
           experience in Python, Web Technologies, and platforms like Salesforce. I enjoy building user-friendly,
           scalable solutions that solve real-world problems. I am driven by a love for continuous learning, creative
-          thinking, and making meaningful contributions through technology."
+          thinking, and making meaningful contributions through technology."</b>
         </p>
 
       </div>
@@ -370,22 +711,40 @@
       </div> -->
     </section>
 
-    <section id="about" class="tabcontent">
-      <h2>About Me</h2>
-      <p>I am a passionate and detail-oriented aspiring <strong>Software Developer</strong> with a background in
-        Electronics and a minor in IT.</p>
-      <p>I am currently building hands-on experience in:</p>
-      <ul>
-        <li>Full-stack web development</li>
-        <li>Python programming</li>
-        <li>Salesforce</li>
-      </ul>
-      <p>With a solid foundation in coding, problem-solving, and collaboration, I am prepared to take on real-world
-        software challenges and contribute meaningfully to team success.</p>
+    <section id="Experience" class="tabcontent">
+
+      <h2 style="font-family: 'Playfair Display', serif; letter-spacing: 1px; margin: 0; color: #023246;">EXPERIENCE</h2>
+      <br>
+     
+     
+        
+        <div class="Experience-item">
+            <div class="company"><b>SENSLYZE INC</b></div>
+            <div class="role">Associate Developer <span class="current-badge">Current</span></div>
+            <div class="duration">Intern Position</div>
+            <p>Currently working on full-stack development projects, gaining hands-on experience in modern web technologies and contributing to real-world software solutions.</p>
+            <ul class="skills-list"> 
+                <ul><li>Python programming</li>
+                <li>  Web development using HTML, CSS, and JavaScript </li>
+                <li>  Full-stack application development </li></ul>
+        </div>
+         <div class="Experience-item">
+            <div class="company"><b>TCS - TATA CONSULTANCY SERVICES</b></div>
+            <div class="role">Assistant Systems Engineer</div>
+            <div class="duration">October 2024 - March 2025</div>
+            <p>Developed strong professional ethics and gained comprehensive systems knowledge including:</p>
+            <ul class="skills-list">
+                <ul><li>  Linux system administration </li>
+                <li>  Windows 10 environment management </li>
+                <li>  Enterprise-level technical support </li>
+                <li>  Professional development and team collaboration </li>
+            </ul>
+        </div>
+
     </section>
 
     <section id="education" class="tabcontent">
-      <h2>My Education</h2>
+      <h2 style="font-family: 'Playfair Display', serif; letter-spacing: 1px; margin: 0; color: #023246;"><b>MY EDUCATION</b></h2>
       <div id="education-content">
         <div class="loading">
           <i class="fas fa-spinner fa-spin"></i> Loading education details...
@@ -394,7 +753,7 @@
     </section>
 
     <section id="skills" class="tabcontent">
-      <h2>My Skills</h2>
+      <h2 style="font-family: 'Playfair Display', serif; letter-spacing: 1px; margin: 0; color: #023246;">MY SKILLS</h2>
       <div id="skills-content" class="skills-list">
         <span class="skill-badge">Python</span>
         <br><span class="skill-badge">Full Stack Development</span>
@@ -409,15 +768,16 @@
     </section>
 
     <section id="projects" class="tabcontent">
-      <h2>My Projects</h2>
+      <h2 style="font-family: 'Playfair Display', serif; letter-spacing: 1px; margin: 0; color: #023246;">MY PROJECTS</h2>
       <div id="projects-content">
+        <br>
 
         <!-- Project 1: B2C Salad Bowl Subscription Service -->
         <div class="project-item">
           <div class="project-header">
 
             <div class="project-info">
-              <h3 class="project-title">1.B2C Salad Bowl Subscription Service</h3>
+              <h3 class="project-title">1.B2C Salad Bowl Subscription Service</h4>
               <div class="project-tech">Built using Salesforce, HTML/CSS. Developed a subscription platform for
                 customers to order salad bowls with recurring delivery options.</div>
             </div>
@@ -497,7 +857,8 @@
     </section>
 
     <section id="contact" class="tabcontent">
-      <h2>Contact Me</h2>
+      <h2 style="font-family: 'Playfair Display', serif; letter-spacing: 1px; margin: 0; color: #023246;">Contact Me</h2>
+      <br>
       <div class="row">
         <div class="col-md-6">
           <h4>Get in Touch</h4>
