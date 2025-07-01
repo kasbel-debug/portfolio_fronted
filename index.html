@@ -958,59 +958,62 @@
     });
 
     // Load education from API
-   async function loadEducation() {
-      const container = document.getElementById('education-content');
-      
-      try {
-        const response = await fetch(`${API_BASE}/education`);
-        console.log('Response:', response); // Debugging line
-        if (!response.ok) {
-          console.error('HTTP error:', response.status);
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const education = await response.json();
-        container.innerHTML = '';
-
-        if (education && education.length > 0) {
-          education.forEach(edu => {
-            const eduCard = document.createElement('div');
-            eduCard.className = 'project-card';
-
-            eduCard.innerHTML = `
-              <h4>${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</h4>
-              <p><strong>${edu.institution}</strong></p>
-              <p>
-                ${edu.startYear && edu.endYear ? `${edu.startYear} - ${edu.endYear}` :
-                edu.endYear ? `Year of Passing: ${edu.endYear}` : ''}
-                ${edu.grade ? ` | Grade: <strong>${edu.grade}</strong>` : ''}
-              </p>
-              ${edu.description ? `<p>${edu.description}</p>` : ''}
-            `;
-
-            container.appendChild(eduCard);
-          });
-        } else {
-          // Show message if no data found
-          container.innerHTML = `
-            <div class="error-message">
-              <i class="fas fa-info-circle"></i> No education data found in the database.
-            </div>
-          `;
-        }
-      } catch (error) {
-        console.error('Error loading education:', error);
-        container.innerHTML = `
-          <div class="error-message">
-            <i class="fas fa-exclamation-triangle"></i> 
-            Failed to load education data. Please check if the API server is running.
-            <br><small>Error: ${error.message}</small>
-          </div>
-        `;
-      }
+async function loadEducation() {
+  const container = document.getElementById('education-content');
+  
+  try {
+    const response = await fetch(`${API_BASE}/education`);
+    console.log('Response:', response); // Debugging line
+    
+    if (!response.ok) {
+      console.error('HTTP error:', response.status);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-
-
+    
+    const responseData = await response.json();
+    console.log('Response data:', responseData); // Additional debugging
+    
+    // Extract the actual education array from the response
+    const education = responseData.data;
+    container.innerHTML = '';
+    
+    if (education && education.length > 0) {
+      education.forEach(edu => {
+        const eduCard = document.createElement('div');
+        eduCard.className = 'project-card';
+        
+        eduCard.innerHTML = `
+          <h4>${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</h4>
+          <p><strong>${edu.institution}</strong></p>
+          <p>
+            ${edu.startYear && edu.endYear ? `${edu.startYear} - ${edu.endYear}` :
+            edu.endYear ? `Year of Passing: ${edu.endYear}` : ''}
+            ${edu.grade ? ` | Grade: <strong>${edu.grade}</strong>` : ''}
+          </p>
+          ${edu.description ? `<p>${edu.description}</p>` : ''}
+        `;
+        
+        container.appendChild(eduCard);
+      });
+    } else {
+      // Show message if no data found
+      container.innerHTML = `
+        <div class="error-message">
+          <i class="fas fa-info-circle"></i> No education data found in the database.
+        </div>
+      `;
+    }
+  } catch (error) {
+    console.error('Error loading education:', error);
+    container.innerHTML = `
+      <div class="error-message">
+        <i class="fas fa-exclamation-triangle"></i> 
+        Failed to load education data. Please check if the API server is running.
+        <br><small>Error: ${error.message}</small>
+      </div>
+    `;
+  }
+}
     // Load skills from API
     async function loadSkills() {
       try {
@@ -1159,6 +1162,7 @@
       // Load initial data
 
       loadEducation();
+      
       loadSkills();
     });
   </script>
