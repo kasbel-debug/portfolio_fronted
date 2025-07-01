@@ -963,8 +963,9 @@
       
       try {
         const response = await fetch(`${API_BASE}/education`);
-        
+        console.log('Response:', response); // Debugging line
         if (!response.ok) {
+          console.error('HTTP error:', response.status);
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         
