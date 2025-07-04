@@ -5,22 +5,13 @@ body {
       linear-gradient(rgba(2, 50, 70, 0.7), rgba(2, 50, 70, 0.7)),
       url("https://vdigtech.com/wp-content/uploads/2024/03/Design.png"),
       url("https://vdigtech.com/wp-content/uploads/2024/03/Design.png");
-      background-size: cover, contain, contain;
-      background-repeat: no-repeat, no-repeat, no-repeat;
-      background-position: center, left top, right top;
-    animation: moveBackground 20s linear infinite;
+        background-position: left top, right top;
+                background-repeat: no-repeat, no-repeat;
+                background-position: left top, right center;
+                background-repeat: no-repeat, no-repeat;
+                background-position: left bottom, right top;
+                background-repeat: no-repeat, no-repeat;
 
-@keyframes move background-image {
-0% {
-    background-image -position: center, left top, right top;
-}
-50% {
-    background-image -position: center, left center, right center;
-}
-100% {
-    background-image -position: center, left bottom, right bottom;
-  }
-}
     /* 3D parallax effect */
     perspective: 1000px;
     /* Animate background position for a subtle 3D movement */
@@ -138,22 +129,6 @@ body {
   animation-delay: 12s;
   animation-duration: 22s;
 }
-
-@keyframes float {
-  0% {
-    transform: translateY(0px) rotate(0deg);
-    opacity: 0.7;
-  }
-  50% {
-    transform: translateY(-100px) rotate(180deg);
-    opacity: 0.3;
-  }
-  100% {
-    transform: translateY(0px) rotate(360deg);
-    opacity: 0.7;
-  }
-}
-
 /* Flowing Lines Animation */
 .flowing-lines {
   position: absolute;
