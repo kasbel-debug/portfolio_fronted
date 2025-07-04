@@ -50,7 +50,40 @@ body {
   position: relative;
   overflow-x: hidden;
 }
+ @keyframes pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(0.8); }
+  100% { transform: scale(1); }
+}
 
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    
+  }
+   .pulse-btn {
+    display: inline-block;
+    animation: pulse 1s ease-in-out infinite;
+    /* Optional visual polish */
+    transition: box-shadow 0.1s;
+  }
+
+  /* Optional glow on hover for added effect */
+  .pulse-btn:hover {
+    box-shadow: 0 0 8px rgba(197, 182, 182, 0.3);
+  }
+
+  /* Respect user motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .pulse-btn {
+      animation: none;
+    }
+  }
+ 
 /* Animated Background */
 .animated-background {
   position: fixed;
@@ -72,7 +105,7 @@ body {
 .shape {
   position: absolute;
   border-radius: 50%;
-  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(40, 112, 148, 0.3));
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(1, 6, 8, 0.3));
   animation: float 20s infinite linear;
 }
 
